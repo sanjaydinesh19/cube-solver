@@ -134,7 +134,6 @@ Ensures proper alignment and secure coupling between motors and adapters.
 ### Control Electronics
 
 #### Arduino Boards (x2: Master and Slave)
-![Arduino Uno](https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Uno_-_R3.jpg)
 
 - Master: Receives commands from the computer  
 - Slave: Executes motor operations  
@@ -142,14 +141,12 @@ Ensures proper alignment and secure coupling between motors and adapters.
 ---
 
 #### A4988 Stepper Drivers (x6)
-![A4988 Driver](https://upload.wikimedia.org/wikipedia/commons/4/4b/A4988_Stepper_Motor_Driver.jpg)
 
 Provides precise current control and microstepping for each motor.
 
 ---
 
 #### CNC Shield V3.0 (x2)
-![CNC Shield V3](https://upload.wikimedia.org/wikipedia/commons/2/2a/CNC_Shield_V3.jpg)
 
 Simplifies wiring and integration of multiple stepper drivers with Arduino.
 
@@ -158,7 +155,7 @@ Simplifies wiring and integration of multiple stepper drivers with Arduino.
 ### Power System
 
 #### 4S Battery Pack
-![LiPo Battery Pack](https://upload.wikimedia.org/wikipedia/commons/6/6a/LiPo_battery.jpg)
+
 
 Supplies power to motors and drivers.
 
