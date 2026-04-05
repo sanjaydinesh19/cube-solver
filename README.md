@@ -73,13 +73,30 @@ project/
 
 ---
 
+## Prerequisites Before Running
+
+Before executing the application, ensure the following are configured:
+
+1. **COM Port**: Verify the correct COM port is configured for the Arduino Master board in your system
+2. **Motor Delay**: Check and adjust the motor delay settings in the configuration file to match your hardware setup
+
+---
+
 ## To Run
 
-Run from project root:
+To execute the cube solver, run the main application from the `app/` folder:
+
+```bash
+python app/main.py
+```
+
+Or alternatively, from the project root:
 
 ```bash
 python -m app.main
 ```
+
+Ensure you have completed all prerequisites above before running the application.
 
 ---
 
