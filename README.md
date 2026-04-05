@@ -91,7 +91,6 @@ pip install -r requirements.txt
 ## Hardware Components
 
 ![My Setup](assets/setup.jpeg)
-The physical Rubik’s Cube solver is built using the following hardware components.
 
 ---
 
