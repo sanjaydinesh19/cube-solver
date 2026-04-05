@@ -1,0 +1,174 @@
+# Cube Solver System
+
+## Overview
+
+This project implements a **Reinforcement Learning-based Rubik’s Cube solver** integrated with:
+
+* AI-based search and policy models
+* Hardware execution (Master-Slave motor control)
+* Configurable pipelines and logging
+
+---
+
+## Project Structure
+
+```
+project/
+│── ai/          # CayleyPy-based AI logic (models, search, environment)
+│── app/         # Entry point (main.py)
+│── config/      # Configuration files (JSON)
+│── hardware/    # Cube solver + Master-Slave motor control system
+│── logs/        # Execution logs and outputs
+│── models/      # Trained RL models (.pth files)
+│── requirements.txt
+│── .gitignore
+```
+
+---
+
+## Components
+
+### AI (`ai/`)
+
+* Contains core logic for solving the cube
+
+---
+
+### Application (`app/`)
+
+* `main.py` → Main entry point
+* Connects AI + hardware + configs
+
+---
+
+### Config (`config/`)
+
+* JSON-based configuration files
+* Used for:
+
+  * Model paths
+  * Solver parameters
+  * Hardware settings
+
+---
+
+### Hardware (`hardware/`)
+
+* Stepper motor control
+* Master-Slave Arduino communication
+* Executes cube moves physically
+
+---
+
+### Models (`models/`)
+
+* Stores trained `.pth` files
+* Used by AI during inference
+
+---
+
+### Logs (`logs/`)
+
+* Stores runtime logs and debugging outputs
+
+---
+
+## To Run
+
+Run from project root:
+
+```bash
+python -m app.main
+```
+
+---
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+## Hardware Components
+
+The physical Rubik’s Cube solver is built using the following hardware components.
+
+---
+
+### Motors and Mechanical Structure
+
+#### NEMA 17 Stepper Motors (x6)
+![NEMA 17 Stepper Motor](https://upload.wikimedia.org/wikipedia/commons/4/4c/NEMA17_Stepper_Motor.jpg)
+
+Used to control each face of the cube independently with precise 90° rotations.
+
+---
+
+#### 3D Printed Chassis
+![3D Printed Chassis](https://upload.wikimedia.org/wikipedia/commons/8/8f/3D_printed_parts.jpg)
+
+Custom-designed frame that holds motors, cube, and structural components together.
+
+---
+
+#### Rubik’s Cube
+![Rubik's Cube](https://upload.wikimedia.org/wikipedia/commons/a/a6/Rubiks_cube.jpg)
+
+Standard 3×3 cube used for solving.
+
+---
+
+#### Cube Adapters
+![Cube Adapter](https://upload.wikimedia.org/wikipedia/commons/3/3a/Mechanical_coupling.jpg)
+
+Interfaces between motor shafts and cube faces.
+
+---
+
+#### Motor Sleeves
+![Motor Sleeve](https://upload.wikimedia.org/wikipedia/commons/5/5e/Shaft_coupler.jpg)
+
+Ensures proper alignment and secure coupling between motors and adapters.
+
+---
+
+### Control Electronics
+
+#### Arduino Boards (x2: Master and Slave)
+![Arduino Uno](https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Uno_-_R3.jpg)
+
+- Master: Receives commands from the computer  
+- Slave: Executes motor operations  
+
+---
+
+#### A4988 Stepper Drivers (x6)
+![A4988 Driver](https://upload.wikimedia.org/wikipedia/commons/4/4b/A4988_Stepper_Motor_Driver.jpg)
+
+Provides precise current control and microstepping for each motor.
+
+---
+
+#### CNC Shield V3.0 (x2)
+![CNC Shield V3](https://upload.wikimedia.org/wikipedia/commons/2/2a/CNC_Shield_V3.jpg)
+
+Simplifies wiring and integration of multiple stepper drivers with Arduino.
+
+---
+
+### Power System
+
+#### 4S Battery Pack
+![LiPo Battery Pack](https://upload.wikimedia.org/wikipedia/commons/6/6a/LiPo_battery.jpg)
+
+Supplies power to motors and drivers.
+
+---
+
+### System Overview
+
+- Each motor controls one face: U, D, L, R, F, B  
+- Master Arduino distributes commands to Slave Arduino  
+- CNC shields handle driver interfacing  
+- A4988 drivers control step precision and current  
+- System performs discrete 90° rotations to execute solving algorithms  
+---
