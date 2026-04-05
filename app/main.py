@@ -7,7 +7,8 @@ import serial
 import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'CayleyPy_Files'))
-from pilgrim import Pilgrim, Searcher
+from ai.model import Pilgrim
+from ai.searcher import Searcher
 
 COM_PORT = 'COM5'
 BAUD_RATE = 115200
@@ -15,10 +16,10 @@ BAUD_RATE = 115200
 print("\n[*] Waking up PyTorch AI...")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-WEIGHTS_PATH = 'CayleyPy_Files/p054-t000_333_e08192.pth'
-GENERATOR_PATH = 'CayleyPy_Files/p054.json'
-TARGET_PATH = 'CayleyPy_Files/p054-t000.pt'
-INFO_PATH = 'CayleyPy_Files/logs/model_p054-t000_333.json'
+WEIGHTS_PATH = 'models/p054-t000_333_e08192.pth'
+GENERATOR_PATH = 'config/p054.json'
+TARGET_PATH = 'models/p054-t000.pt'
+INFO_PATH = 'logs/model_p054-t000_333.json'
 
 with open(GENERATOR_PATH, "r") as f:
     data = json.load(f)
