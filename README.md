@@ -90,6 +90,7 @@ pip install -r requirements.txt
 ```
 ## Hardware Components
 
+![My Setup](assets/setup.jpg)
 The physical Rubik’s Cube solver is built using the following hardware components.
 
 ---
@@ -97,35 +98,31 @@ The physical Rubik’s Cube solver is built using the following hardware compone
 ### Motors and Mechanical Structure
 
 #### NEMA 17 Stepper Motors (x6)
-![NEMA 17 Stepper Motor](https://upload.wikimedia.org/wikipedia/commons/4/4c/NEMA17_Stepper_Motor.jpg)
 
 Used to control each face of the cube independently with precise 90° rotations.
 
 ---
 
 #### 3D Printed Chassis
-![3D Printed Chassis](https://upload.wikimedia.org/wikipedia/commons/8/8f/3D_printed_parts.jpg)
 
 Custom-designed frame that holds motors, cube, and structural components together.
 
 ---
 
 #### Rubik’s Cube
-![Rubik's Cube](https://upload.wikimedia.org/wikipedia/commons/a/a6/Rubiks_cube.jpg)
 
 Standard 3×3 cube used for solving.
 
 ---
 
 #### Cube Adapters
-![Cube Adapter](https://upload.wikimedia.org/wikipedia/commons/3/3a/Mechanical_coupling.jpg)
 
 Interfaces between motor shafts and cube faces.
 
 ---
 
 #### Motor Sleeves
-![Motor Sleeve](https://upload.wikimedia.org/wikipedia/commons/5/5e/Shaft_coupler.jpg)
+
 
 Ensures proper alignment and secure coupling between motors and adapters.
 
