@@ -7,8 +7,8 @@ import serial
 import time
 from flask import Flask, request, jsonify, render_template_string
 
-MOTOR_DELAY = 1.5 # CHANGE THISSSSS!!!!
-COM_PORT = 'COM6' # CHANGE THISSSSS!!!!
+MOTOR_DELAY = 1.5
+COM_PORT = 'COM11'
 BAUD_RATE = 9600    
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +44,7 @@ searcher = Searcher(model=model, all_moves=all_moves_tensor, V0=V0, device=devic
 
 try:
     ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=1)
+    time.sleep(2)
     print(f"[+] Connected to Master Arduino on {COM_PORT}")
 except Exception:
     print("[-] Serial Connection Failed. Running in Simulation Mode.")
@@ -52,7 +53,8 @@ except Exception:
 def apply_moves(state, seq_str):
     curr = state.clone()
     for m in seq_str.strip().split():
-        if m in move_names: curr = curr[all_moves_tensor[move_names.index(m)]]
+        if m in move_names:
+            curr = curr[all_moves_tensor[move_names.index(m)]]
         elif '2' in m:
             base = m[0]
             curr = curr[all_moves_tensor[move_names.index(base)]]
@@ -62,7 +64,8 @@ def apply_moves(state, seq_str):
 def solve_progressive(state):
     for b in [256, 1024, 4096, 16384]:
         res = searcher.get_solution(state, B=b, num_steps=200, num_attempts=1)
-        if res[0] is not None: return " ".join([move_names[i] for i in res[0].tolist()])
+        if res[0] is not None:
+            return " ".join([move_names[i] for i in res[0].tolist()])
     return None
 
 INDEX_HTML = r"""
@@ -288,12 +291,24 @@ INDEX_HTML = r"""
 """
 
 @app.route('/')
-def index(): return render_template_string(INDEX_HTML)
+def index():
+    return render_template_string(INDEX_HTML)
+
+def send_and_wait(move):
+    if not ser:
+        return
+    ser.write(f"{move}\n".encode())
+    while True:
+        line = ser.readline().decode().strip()
+        if line:
+            print(line)
+        if line == "DONE":
+            break
 
 @app.route('/api/manual', methods=['POST'])
 def manual_move():
     move = request.json.get('move')
-    if ser: ser.write(f"{move}\n".encode())
+    send_and_wait(move)
     return jsonify({'status': 'ok'})
 
 @app.route('/api/validate', methods=['POST'])
@@ -303,9 +318,12 @@ def validate_cube():
         solution = kociemba.solve(cube_str)
         scramble = []
         for m in reversed(solution.split()):
-            if "'" in m: scramble.append(m[0])
-            elif "2" in m: scramble.append(m)
-            else: scramble.append(m + "'")
+            if "'" in m:
+                scramble.append(m[0])
+            elif "2" in m:
+                scramble.append(m)
+            else:
+                scramble.append(m + "'")
         return jsonify({'scramble': " ".join(scramble)})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -326,10 +344,9 @@ def solve_api():
 @app.route('/api/hardware', methods=['POST'])
 def hardware_api():
     sol = request.json.get('solution', '')
-    if ser and sol:
+    if sol:
         for m in sol.split():
-            ser.write(f"{m}\n".encode())
-            time.sleep(MOTOR_DELAY)
+            send_and_wait(m)
     return jsonify({'status': 'sent'})
 
 if __name__ == '__main__':
